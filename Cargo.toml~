@@ -1,8 +1,0 @@
-[package]
-name = "linalg_rs"
-version = "0.1.0"
-authors = ["Kenya Nara <penta2himajin@gmail.com>"]
-edition = "2018"
-
-[dependencies]
-num = "0.2"
