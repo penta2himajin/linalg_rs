@@ -33,7 +33,7 @@ pub struct Scalar<
      + PartialEq
      + PartialOrd
      + Copy> {
-    pub value: T
+    value: T
 }
 
 pub enum Direction {
@@ -52,8 +52,8 @@ pub struct Vector<
      + PartialEq
      + PartialOrd
      + Copy> {
-    pub value: Vec<T>,
-    pub direction: Direction
+    value: Vec<T>,
+    direction: Direction
 }
 pub struct Matrix<
     T: Add
@@ -66,8 +66,7 @@ pub struct Matrix<
      + DivAssign
      + PartialEq
      + PartialOrd
-     + Copy> {
-    pub value: Vec<T>,
+     + Copy> {    value: Vec<T>,
 }
 
 /*  Implementation  */
