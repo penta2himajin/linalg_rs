@@ -6,7 +6,8 @@ use linalg_rs::{
 };
 
 fn main() {
-    let n = Scalar{ value: 1 };
-    let s = Scalar::from(n);
+    let s = Scalar::from(1);
     println!("{}", s.unwrap());
+    let v = Vector::from(vec![1, 2]);
+    println!("{:?}", v.unwrap());
 }

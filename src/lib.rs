@@ -1,5 +1,6 @@
 use std::{
     vec::Vec,
+    convert::From,
     clone::Clone,
     ops::{
         Add,
@@ -55,6 +56,7 @@ pub struct Vector<
     pub value: Vec<T>,
     pub direction: Direction
 }
+
 pub struct Matrix<
     T: Add
      + AddAssign
@@ -67,7 +69,7 @@ pub struct Matrix<
      + PartialEq
      + PartialOrd
      + Copy> {
-    pub value: Vec<T>,
+    pub value: Vec<Vec<T>>,
 }
 
 /*  Implementation  */
@@ -84,14 +86,25 @@ where T: Add
        + PartialEq
        + PartialOrd
        + Copy {
-    fn from(s: T) -> Scalar<T> {
-        Scalar{
-            value: s
-        }
-    }
-
     pub fn unwrap(self) -> T {
         self.value
+    }
+}
+
+impl<T> From<T> for Scalar<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+    fn from(s: T) -> Scalar<T> {
+        Scalar { value: s }
     }
 }
 
@@ -108,15 +121,28 @@ where T: Add
        + PartialEq
        + PartialOrd
        + Copy {
-    fn from(v: Vec<T>) -> Vector<T> {
-        Vector{
-                value: v,
-                direction: Direction::Column
-        }
-    }
-
-    fn unwrap(self) -> Vec<T> {
+    pub fn unwrap(self) -> Vec<T> {
         self.value
+    }
+}
+
+impl<T> From<Vec<T>> for Vector<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+    fn from(v: Vec<T>) -> Vector<T> {
+        Vector {
+	        value: v,
+            direction: Direction::Column
+	    }
     }
 }
 
