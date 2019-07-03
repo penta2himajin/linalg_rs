@@ -69,7 +69,7 @@ pub struct Matrix<
      + PartialEq
      + PartialOrd
      + Copy> {
-    pub value: Vec<Vec<T>>,
+    pub value: Vec<T>,
 }
 
 /*  Implementation  */
@@ -108,6 +108,49 @@ where T: Add
     }
 }
 
+impl<T> Copy for Scalar<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+}
+
+impl<T> Clone for Scalar<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+    fn clone(&self) -> Scalar<T> {
+        Scalar{ value: self.value.clone() }
+    }
+}
+
+// Direction
+impl Copy for Direction {}
+
+impl Clone for Direction {
+    fn clone(&self) -> Direction {
+        match self {
+            Direction::Row => Direction::Row,
+            Direction::Column => Direction::Column,
+        }
+    }
+}
+
 // Vector
 impl<T> Vector<T>
 where T: Add
@@ -142,6 +185,40 @@ where T: Add
         Vector {
 	        value: v,
             direction: Direction::Column
+	    }
+    }
+}
+
+impl<T> Copy for Vector<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+}
+
+impl<T> Clone for Vector<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+    fn clone(&self) -> Vector<T> {
+        Vector{
+            value: self.value.clone(),
+            direction: self.direction.clone()
 	    }
     }
 }
