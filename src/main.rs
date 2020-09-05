@@ -14,6 +14,6 @@ fn main() {
     println!("{:?}", v1_add_v2.unwrap());
     let v1_sub_v2 = &v_1 - &v_2;
     println!("{:?}", v1_sub_v2.unwrap());
-    let v1_v2_ScolerProduct = &v_1 * &v_2;
-    println!("{}", v1_v2_ScolerProduct);
+    let v1_v2_scoler_product = &v_1 * &v_2;
+    println!("{}", v1_v2_scoler_product);
 }
