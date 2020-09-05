@@ -286,7 +286,7 @@ where T: Add
     }
 }
 
-// Scalar snd Vector
+// Scalar and Vector
 impl<T> Mul<Vector<T>> for Scalar<T>
 where T: Add
        + AddAssign
@@ -310,3 +310,55 @@ where T: Add
         Vector::from(ret)
     }
 }
+
+impl<T> Mul<Scalar<T>> for Vector<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul<Output=T>
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Copy {
+    type Output = Vector<T>;
+
+    fn mul(self, rhs: Scalar<T>) -> Vector<T> {
+        let mut ret = self.value.clone();
+        for i in 0..self.value.len() {
+            ret[i] = rhs.value * self.value[i];
+        }
+
+        Vector::from(ret)
+    }
+}
+
+/* // Vector and Vector
+impl<T> Add<Vector<T>> for Vector<T>
+where T: Add<Output=T>
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Clone {
+    type Output = Vector<T>;
+
+    fn add(self, rhs: Vector<T>) -> Vector<T> {
+        if self.value.len() == rhs.value.len() {
+            let mut ret = self.value.clone()
+
+            for i in self.value.len() {
+                ret[i] += rhs[i];
+            }
+
+            ret
+        }
+    }
+} */
