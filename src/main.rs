@@ -6,6 +6,6 @@ fn main() {
     println!("{}", s.unwrap());
     let v = Vector::from(vec![1, 2]);
     println!("{:?}", v.unwrap());
-    let s_mul_v = s*v;
+    let s_mul_v = s * v;
     println!("{:?}", s_mul_v.unwrap());
 }

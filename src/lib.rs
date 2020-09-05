@@ -52,7 +52,7 @@ pub struct Vector<
      + DivAssign
      + PartialEq
      + PartialOrd
-     + Copy> {
+     + Clone> {
     pub value: Vec<T>,
     pub direction: Direction
 }
@@ -68,7 +68,7 @@ pub struct Matrix<
      + DivAssign
      + PartialEq
      + PartialOrd
-     + Copy> {
+     + Clone> {
     pub value: Vec<T>,
 }
 
@@ -163,9 +163,9 @@ where T: Add
        + DivAssign
        + PartialEq
        + PartialOrd
-       + Copy {
-    pub fn unwrap(self) -> Vec<T> {
-        self.value
+       + Clone {
+    pub fn unwrap(&self) -> Vec<T> {
+        self.value.clone()
     }
 }
 
@@ -180,27 +180,13 @@ where T: Add
        + DivAssign
        + PartialEq
        + PartialOrd
-       + Copy {
+       + Clone {
     fn from(v: Vec<T>) -> Vector<T> {
         Vector {
 	        value: v,
             direction: Direction::Column
 	    }
     }
-}
-
-impl<T> Copy for Vector<T>
-where T: Add
-       + AddAssign
-       + Sub
-       + SubAssign
-       + Mul
-       + MulAssign
-       + Div
-       + DivAssign
-       + PartialEq
-       + PartialOrd
-       + Copy {
 }
 
 impl<T> Clone for Vector<T>
@@ -214,9 +200,9 @@ where T: Add
        + DivAssign
        + PartialEq
        + PartialOrd
-       + Copy {
+       + Clone {
     fn clone(&self) -> Vector<T> {
-        Vector{
+        Vector {
             value: self.value.clone(),
             direction: self.direction.clone()
 	    }
