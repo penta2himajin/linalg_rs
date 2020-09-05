@@ -37,6 +37,7 @@ pub struct Scalar<
     pub value: T
 }
 
+#[derive(PartialEq)]
 pub enum Direction {
     Row, Column
 }
@@ -287,7 +288,7 @@ where T: Add
 }
 
 // Scalar and Vector
-impl<T> Mul<Vector<T>> for Scalar<T>
+impl<T> Mul<&Vector<T>> for Scalar<T>
 where T: Add
        + AddAssign
        + Sub
@@ -301,7 +302,7 @@ where T: Add
        + Copy {
     type Output = Vector<T>;
 
-    fn mul(self, rhs: Vector<T>) -> Vector<T> {
+    fn mul(self, rhs: &Vector<T>) -> Vector<T> {
         let mut ret = rhs.value.clone();
         for i in 0..rhs.value.len() {
             ret[i] = self.value * rhs.value[i];
@@ -311,7 +312,7 @@ where T: Add
     }
 }
 
-impl<T> Mul<Scalar<T>> for Vector<T>
+impl<T> Mul<Scalar<T>> for &Vector<T>
 where T: Add
        + AddAssign
        + Sub
@@ -335,8 +336,8 @@ where T: Add
     }
 }
 
-/* // Vector and Vector
-impl<T> Add<Vector<T>> for Vector<T>
+// Vector and Vector
+impl<T> Add<&Vector<T>> for &Vector<T>
 where T: Add<Output=T>
        + AddAssign
        + Sub
@@ -350,15 +351,85 @@ where T: Add<Output=T>
        + Clone {
     type Output = Vector<T>;
 
-    fn add(self, rhs: Vector<T>) -> Vector<T> {
-        if self.value.len() == rhs.value.len() {
-            let mut ret = self.value.clone()
+    fn add(self, rhs: &Vector<T>) -> Vector<T> {
+        if (self.value.len() == rhs.value.len()) && (self.direction == rhs.direction) {
+            let mut ret = self.value.clone();
 
-            for i in self.value.len() {
-                ret[i] += rhs[i];
+            for i in 0..self.value.len() {
+                ret[i] += rhs.value[i].clone();
+            }
+
+            Vector {
+                value: ret,
+                direction: self.direction.clone()
+            }
+        } else {
+            panic!("length of vector are different.");
+        }
+    }
+}
+
+impl<T> Sub<&Vector<T>> for &Vector<T>
+where T: Add
+       + AddAssign
+       + Sub<Output=T>
+       + SubAssign
+       + Mul
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Clone {
+    type Output = Vector<T>;
+
+    fn sub(self, rhs: &Vector<T>) -> Vector<T> {
+        if (self.value.len() == rhs.value.len()) && (self.direction == rhs.direction) {
+            let mut ret = self.value.clone();
+
+            for i in 0..self.value.len() {
+                ret[i] -= rhs.value[i].clone();
+            }
+
+            Vector {
+                value: ret,
+                direction: self.direction.clone()
+            }
+        } else {
+            panic!("length of vector are different.");
+        }
+    }
+}
+
+impl<T> Mul<&Vector<T>> for &Vector<T>
+where T: Add
+       + AddAssign
+       + Sub
+       + SubAssign
+       + Mul<Output=T>
+       + MulAssign
+       + Div
+       + DivAssign
+       + PartialEq
+       + PartialOrd
+       + Clone {
+    type Output = T;
+
+    fn mul(self, rhs: &Vector<T>) -> T {
+        if (self.value.len() == rhs.value.len()) && (self.direction == rhs.direction) {
+            let mut v = self.value.clone();
+            for i in 0..self.value.len() {
+                v[i] *= rhs.value[i].clone();
+            }
+
+            let mut ret = v[0].clone();
+            for i in 1..self.value.len() {
+                ret += v[i].clone();
             }
 
             ret
+        } else {
+            panic!("length of vector are different.");
         }
     }
-} */
+}
