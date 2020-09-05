@@ -1,5 +1,5 @@
 extern crate linalg_rs;
-use linalg_rs::{ Scalar, Vector };
+use linalg_rs::{Scalar, Vector};
 
 fn main() {
     let s = Scalar::from(2);
