@@ -60,7 +60,7 @@ pub struct Matrix<
         + PartialOrd
         + Clone,
 > {
-    pub value: Vec<T>,
+    pub value: Vec<Vec<T>>,
 }
 
 /*  Implementation  */
